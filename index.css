@@ -1,0 +1,260 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+
+    width: 100%;
+    min-height: 100vh;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(118,118,186,1) 35%, rgba(0,212,255,1) 100%);
+    padding: 10px;
+}
+
+.todo {
+    width: 100%;
+    max-width: 540px;
+    background: white;
+    margin: 100px auto 20px;
+    padding: 40px 30px 30px;
+    border-radius: 10px;
+}
+
+.todo h2 {
+    color: #002760;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.todo h2 img {
+    width: 30px;
+    margin-left: 10px;
+}
+
+.calendar {
+    margin-top: 20px;
+    font-size: 18px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    display: inline-block;
+
+}
+
+#current-date {
+    margin: 0;
+    padding: 0;
+    margin-top: -10px;
+}
+
+#add-task-btn {
+    
+    margin-top: 40px;
+    padding: 20px auto;
+    width: 70px;
+    height: 25px;
+    transition: color 0.3s ease; 
+    cursor: pointer;
+}
+
+#add-task-btn:hover {
+    color: red;
+    
+}
+
+  #calendar-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    margin-bottom: 300px;
+    position: fixed;
+
+}
+
+#task-title {
+    width: 100%;
+    max-width: 560px;
+    border-radius: 5px;
+    margin-top: -10px;
+    
+}
+
+#task-description {
+    width: 100%;
+    max-width: 560px;
+    border-radius: 5px;
+    margin: 20px none 5px;
+}
+
+.calendar-content input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+h3 {
+    font-weight: normal;
+    margin-top: 10px;
+    margin-left: -420px;
+}
+
+#date-picker {
+    width: 100%;
+    max-width: 140px;
+    border-radius: 5px;
+    margin-left: -420px;
+}
+
+
+.modal-header {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.footer-btn {
+    background-color: lightgray;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+
+#cancel-btn:hover {
+    color: gray;
+}
+
+
+#add-task-footer-btn {
+    background-color: orangered;
+}
+
+#add-task-footer-btn:hover {
+color:darkorange;
+}
+
+.modal-header {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+ul li {
+
+    list-style: none;
+    font-size: 17px;
+    padding: 12px 8px 12px 50px;
+    user-select: none;
+    cursor: pointer;
+
+}
+
+ ul input {
+    width: 100%;
+    max-width: 540px;
+    height: 33px;
+    border-radius: 5px;
+    margin-top: -10px;
+    padding: 12px 8px 12px 50px;
+    box-sizing: border-box;
+    margin-left: 393px;
+
+    background-image: url('images/unchecked.png');
+    background-size: 23px 23px;  
+    background-position: 8px center; 
+    background-repeat: no-repeat; 
+}
+
+ul input.checked {
+    color: #555;
+    text-decoration:line-through;
+    background-image: url(images/checked.png); 
+    
+    opacity: 1;
+    animation: crackerEffect 0.5s ease-out forwards; 
+}
+
+
+.delete-btn {
+    background-color: #f44336; 
+    color: white;
+    border: 1px solid #f44336; 
+    padding: 6px 10px;
+    border-radius: 2px;
+    cursor: pointer; 
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f; 
+    transform: scale(1.1); 
+}
+
+
+input[disabled] {
+    background-color: white; 
+    color: black;            
+    border: 1px solid #ccc;  
+}
+
+
+.edit-btn, .save-btn {
+
+    margin-left: 4px;
+    padding: 6px 10px;
+    border-radius: 2px;
+    border: 1px solid #4CAF50;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; 
+    color: white;
+}
+
+.edit-btn:hover, .save-btn:hover {
+    background-color: #45a049;
+    transform: scale(1.1);
+}
+
+@keyframes crackerEffect {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        background-color: #fff; 
+    }
+    50% {
+        transform: scale(1.2);  
+        opacity: 0.7;            
+        background-color: rgba(255, 140, 0, 0.7); 
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        background-color: #fff; 
+    }
+}
