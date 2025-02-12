@@ -215,10 +215,16 @@ const renderTasks = () => {
             renderTasks(); 
         });
 
+        const buttonContainer = document.createElement('div')
+        buttonContainer.classList.add('button-container')
+
         li.appendChild(checkbox);
         li.appendChild(titleInput);
+        li.appendChild(buttonContainer)
         li.appendChild(deleteButton);
         li.appendChild(editButton);
+
+       
 
         listcontainer.appendChild(li);
     });
@@ -247,5 +253,4 @@ listcontainer.addEventListener('click', function(e){
     }
 
 },false)
-
 
