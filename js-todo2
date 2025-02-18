@@ -1,0 +1,226 @@
+const inputBox = document.getElementById('inputBox');
+const addBtn = document.getElementById('addBtn');
+const todoList = document.getElementById('todoList');
+
+let editTodo = null;
+
+const today = new Date();
+const weekday = today.toLocaleString('default', { weekday: 'short' });
+const day = today.getDate();
+const month = today.toLocaleString('default', { month: 'short' });
+const year = today.getFullYear();
+const formattedDate = `Today's, ${weekday} ${day} ${month} ${year}`;
+document.getElementById('current-date').textContent = formattedDate;
+
+const taskTitles = [
+
+    "Complete the project",
+    "Buy groceries",
+    "Pick up the laundry",
+    "Finish reading the book",
+    "Prepare the presentation",
+    "Call mom",
+    "Go for a walk",
+    "Water the plants",
+    "Clean the kitchen",
+    "Check emails",
+    "Do my laundry",
+    "Cancel milk delivery",
+    "Clean fridge",
+    "Check passport",
+    "Do web check-in",
+    "Download a movie for the flight",
+    "Recharge mobile",
+    "Pack swimsuit",
+    "Complete the Monthly Report",
+    "Attend Team Meeting at 10 AM",
+    "Respond to Important Emails",
+    "Organize Work Files",
+    "Check and Update the Calendar",
+    "Follow Up on Pending Tasks",
+    "Schedule Client Call",
+    "Prepare Meeting Agenda",
+    "Submit Project Proposal",
+    "Vacuum the Living Room",
+    "Go for a Run",
+    "Attend Yoga Class",
+    "Do 30 Minutes of Cardio",
+    "Stretch for 10 Minutes",
+    "Track Caloric Intake",
+    "Take a Walk After Lunch",
+    "Prepare Healthy Snack",
+    "Do Strength Training",
+    "Take a Cold Shower",
+    "Get 8 Hours of Sleep",
+    "Write a Blog Post",
+    "Draw or Paint",
+    "Learn a New Language",
+    "Watch a New Episode of a Series",
+    "Start a New DIY Project",
+    "Practice Playing the Guitar"
+
+];
+
+function getRandomTaskTitle() {
+    const randomIndex = Math.floor(Math.random() * taskTitles.length);
+    return taskTitles[randomIndex];
+}
+
+// Set the placeholder with a random task title when the page loads
+const setRandomPlaceholder = () => {
+    const inputBox = document.getElementById("inputBox");
+    inputBox.placeholder = getRandomTaskTitle();
+};
+
+// Call the function to set the placeholder when the page is loaded
+window.onload = () => {
+    setRandomPlaceholder(); // Set initial placeholder
+
+    // Change the placeholder every 2 seconds
+    setInterval(setRandomPlaceholder, 4500); 
+}
+
+// Clear the placeholder when the user starts typing
+const inputBoxx = document.getElementById("inputBox");
+inputBox.addEventListener("focus", () => {
+    inputBox.placeholder = ""; // Clear placeholder when input field is focused
+});
+
+// Function to add todo
+const addTodo = () => {
+    const inputBox = document.getElementById("inputBox");
+    const inputText = inputBox.value.trim();
+    
+    if (inputText.length <= 0) {
+        alert("You must write something in your to do");
+
+        // If no input, update the placeholder with a new random task title
+        inputBox.placeholder = getRandomTaskTitle(); // Update the placeholder with a new random task
+        return false;
+    }
+
+
+    if (addBtn.value === "Edit") {
+        // Passing the original text to editLocalTodos function before edit it in the todoList
+        editLocalTodos(editTodo.target.previousElementSibling.innerHTML);
+        editTodo.target.previousElementSibling.innerHTML = inputText;
+        addBtn.value = "Add";
+        inputBox.value = "";
+    }
+    else {
+        //Creating p tag
+        const li = document.createElement("li");
+        const p = document.createElement("p");
+        p.innerHTML = inputText;
+        li.appendChild(p);
+
+
+        // Creating Edit Btn
+        const editBtn = document.createElement("button");
+        editBtn.innerText = "Edit";
+        editBtn.classList.add("btn", "editBtn");
+        li.appendChild(editBtn);
+
+        // Creating Delete Btn
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerText = "Remove";
+        deleteBtn.classList.add("btn", "deleteBtn");
+        li.appendChild(deleteBtn);
+
+        todoList.appendChild(li);
+        inputBox.value = "";
+
+        saveLocalTodos(inputText);
+    }
+}
+
+// Function to update : (Edit/Delete) todo
+const updateTodo = (e) => {
+    if (e.target.innerHTML === "Remove") {
+        todoList.removeChild(e.target.parentElement);
+        deleteLocalTodos(e.target.parentElement);
+    }
+
+    if (e.target.innerHTML === "Edit") {
+        inputBox.value = e.target.previousElementSibling.innerHTML;
+        inputBox.focus();
+        addBtn.value = "Edit";
+        editTodo = e;
+    }
+}
+
+// Function to save local todo
+const saveLocalTodos = (todo) => {
+    let todos;
+    if (localStorage.getItem("todos") === null) {
+        todos = [];
+    }
+    else {
+        todos = JSON.parse(localStorage.getItem("todos"));
+    }
+    todos.push(todo);
+    localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+// Function to get local todo
+const getLocalTodos = () => {
+    let todos;
+    if (localStorage.getItem("todos") === null) {
+        todos = [];
+    }
+    else {
+        todos = JSON.parse(localStorage.getItem("todos"));
+        todos.forEach(todo => {
+
+            //Creating p tag
+            const li = document.createElement("li");
+            const p = document.createElement("p");
+            p.innerHTML = todo;
+            li.appendChild(p);
+
+
+            // Creating Edit Btn
+            const editBtn = document.createElement("button");
+            editBtn.innerText = "Edit";
+            editBtn.classList.add("btn", "editBtn");
+            li.appendChild(editBtn);
+
+            // Creating Delete Btn
+            const deleteBtn = document.createElement("button");
+            deleteBtn.innerText = "Remove";
+            deleteBtn.classList.add("btn", "deleteBtn");
+            li.appendChild(deleteBtn);
+
+            todoList.appendChild(li);
+        });
+    }
+}
+
+// Function to delete local todo
+const deleteLocalTodos = (todo) => {
+    let todos;
+    if (localStorage.getItem("todos") === null) {
+        todos = [];
+    }
+    else {
+        todos = JSON.parse(localStorage.getItem("todos"));
+    }
+
+    let todoText = todo.children[0].innerHTML;
+    let todoIndex = todos.indexOf(todoText);
+    todos.splice(todoIndex, 1);
+    localStorage.setItem("todos", JSON.stringify(todos));
+    // Array functions : slice / splice
+    console.log(todoIndex);
+}
+
+const editLocalTodos = (todo) => {
+    let todos = JSON.parse(localStorage.getItem("todos"));
+    let todoIndex = todos.indexOf(todo);
+    todos[todoIndex] = inputBox.value;
+    localStorage.setItem("todos", JSON.stringify(todos));
+}
+
+document.addEventListener('DOMContentLoaded', getLocalTodos);
+addBtn.addEventListener('click', addTodo);
+todoList.addEventListener('click', updateTodo);
